@@ -2,7 +2,7 @@
 
 //建立PDO
 $dsn="mysql:host=localhost;charset=utf8;dbname=resume";
-$pdo=new PDO($dsn,"root","1234");
+$pdo=new PDO($dsn,"root","");
 
 //啟用session
 session_start();
