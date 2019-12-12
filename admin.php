@@ -34,27 +34,15 @@
 				<?php
 				if (!empty($_GET) && !empty($_GET['table'])){
 					include("./admin/" . $_GET['table'] . ".php");
-					
-					// switch($_GET['table']){
-						// case "shortSelfInterduction":
-						// 	include("./admin/shortSelfInterduction.php");
-						// break;
-						// case "selfInterduction":
-						// 	include("./admin/" . $_GET['table'] . ".php");
-						// break;
-						// case "workExperience":
-						// 	include("./admin/" . $_GET['table'] . ".php");
-						// break;
-					// }
-
 				}
 				?>	
 			</div>
 		</div>
 		<div id=previewArea>
 			<?php
-			include("./front/shortSelfInterduction.php");
-			?>	
+				if (!empty($_GET) && !empty($_GET['table'])){
+					include("./front/" . $_GET['table'] . ".php");
+				}			?>	
 			
 		</div>
 	</div>

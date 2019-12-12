@@ -1,16 +1,18 @@
 <?php
-			include_once "./base.php";
-			
-			$table=$_GET['table'];
-			$userID=1;
-			if(isset($_GET['resumeID'])){
-				$resumeID=$_GET['resumeID'];
-			}else{
-				$temp=find('resume',['userID'=>$userID])['id'];
-				$_GET['resumeID']=$resumeID=$temp;
-			}
-			$show=explode(",",find('resume',$resumeID)[$table]);
-			?>
+	include_once "./base.php";
+	
+	$table=$_GET['table'];
+	$userID=1;
+	if(isset($_GET['resumeID'])){
+		$resumeID=$_GET['resumeID'];
+	}else{
+		$temp=find('resume',['userID'=>$userID])['id'];
+		$_GET['resumeID']=$resumeID=$temp;
+	}
+	$show=explode(",",find('resume',$resumeID)[$table]);
+?>
+<br>
+
 <div id="choseResume">
 	<div>  <!-- 選擇履歷表 -->
 					履歷表：
@@ -44,9 +46,9 @@
 		$rows=all($table,$data);
 		?>
 			<tr>
-				<td>展示圖片</td>
+				<td style="width:30%;">展示圖片</td>
 				<td>作品名稱</td>
-				<td style="width:60%;">連結網址</td>
+				<td style="width:40%;">連結網址</td>
 				<td class=std>顯示</td>
 				<td>編輯</td>
 				<td>刪除</td>
@@ -62,8 +64,14 @@
 						$pic=find('image',$temp);
 						$src=$pic['src'];
 						$alt=$pic['fileName'];
-						echop("<img src=$src alt=$alt>");
+						echop("<img src=$src alt=$alt style='max-width:100%'; max-heigth:5em>");
 						?>
+						
+						<div name='editBtn' class=button 
+						 onclick="op('#cover','#cvr','./modal/changeImage.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>&userID=<?php echo $userID; ?>')">
+							更換圖片
+						</div>
+						
 					</td>
 					<td>
 						<?php
@@ -96,7 +104,7 @@
 					</td>
 					<td> 
 						<div name='editBtn' class=button 
-						 onclick="op('#cover','#cvr','./modal/saveWorkExperience.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
+						 onclick="op('#cover','#cvr','./modal/savePortfolio.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
 						編輯
 						</div>
 					</td>

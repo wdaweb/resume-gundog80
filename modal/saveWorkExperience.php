@@ -6,7 +6,7 @@ $table=$_GET['table'];
 
 if(!isset($_GET['id'])){
 	//新增 
-	$title="新增";
+	$title="新增工作經歷";
 	$id="";
 	$data=[
 		'company' =>"",
@@ -18,7 +18,7 @@ if(!isset($_GET['id'])){
 	$userID=$_GET['userID'];
 }else { 
 	//編輯
-	$title="編輯";
+	$title="編輯工作經歷";
 	$id=$_GET['id'];
 	// echop($id);
 	$data=find($table,$id);
@@ -35,7 +35,7 @@ if(!isset($_GET['id'])){
 	<br>
 	<h6>
 	<?php echo($title); ?>	
-	編輯工作經歷
+
 	</h6>
 	<hr>
 	<div style="width:100%;">

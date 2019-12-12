@@ -13,7 +13,7 @@ if(in_array($table,["shortSelfInterduction","selfInterduction"])){
 		// echo "hi";
 		// echo $_POST['id'];
 	// }elseif($table=="workExperience"){
-	}elseif(in_array($table,["workExperience"])){
+	}elseif(in_array($table,["workExperience",'portfolio'])){
 		echo "hi";
 		$data[$table]=implode(",",$_POST['sh']);
 		$data['id']=$_POST['resumeID'];

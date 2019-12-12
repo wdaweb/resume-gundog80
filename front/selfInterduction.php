@@ -13,11 +13,8 @@
 ?>
 
 <div id=font-simpleIntroduction class=normalArea >
-	<div class="row middleStyle">
-		<div class="col-4 ">
-			<img class="photo"  src=<?php echo $photoPath; ?> alt="" >
-		</div>
-		<div class=col-8>
+	<div class="row ">
+		<div class=col-11>
 			<?php
 			echop($introduction[$table]);
 			?>
