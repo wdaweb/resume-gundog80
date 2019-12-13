@@ -61,4 +61,5 @@ function editresume (){
 function logout (){
 	window.location.assign('./api/logout.php');
 }
+
 </script>
