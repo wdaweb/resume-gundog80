@@ -18,10 +18,10 @@
 		$rows=all($table,$data);
 		?>
 			<tr>
-				<td>公司</td>
-				<td>職稱</td>
-				<td style="width:5em;">任職期間</td>
-				<td style="width:5em;">詳細說明</td>
+				<td style="width:35%;">公司</td>
+				<td style="width:35%;">職稱</td>
+				<td style="width:20%;">任職年</td>
+				<td style="width:20%;">詳細說明</td>
 
 			</tr>
 <?php
