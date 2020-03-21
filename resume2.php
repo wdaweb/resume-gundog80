@@ -1,37 +1,21 @@
 <?php
-include_once "./base.php";
-if(isset($_GET['resumeID'])){
-    $resumeID=$_GET['resumeID'];
-}else{
-	$resumeID=1;
-
+// include_once "./base.php";
+$nRes=chkG('resume');
+if($nRes==""){
+    $nRes=1;
 }
-$userID=find('resume',$resumeID)['userID'];
 
 ?>
 
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-    <!-- <link rel="stylesheet" type="text/css" href="./css/userCss.css"> -->
-    <link rel="stylesheet" href="./css/userCss.css">
-	<link href="./css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-<body style="background:rgb(230 230 255);">
-		
 		
 		
 		
 
 <?php
-echop("短自介");
-$table="shortSelfInterduction";
-include_once "./front/$table.php";
+// echop("短自介");
+$do="sayHellow";
+// echo $do;
+include_once "./front/$do.php";
 ?>
 	技能區
 	<br>

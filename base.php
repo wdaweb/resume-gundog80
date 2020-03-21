@@ -1,27 +1,18 @@
 <?php 
-
-//建立PDO
 $dsn="mysql:host=localhost;charset=utf8;dbname=resume";
-$pdo=new PDO($dsn,"root","1234");
+// $pdo=new PDO($dsn,"root","1234");
+$pdo=new PDO($dsn,"root","");
 
-//啟用session
 session_start();
 
-// //利用session是否存在來判斷使用者是否已連線網站
-// if(empty($_SESSION['total'])){
+if(empty($_SESSION['total'])){
+  $total=find("total",1);
+  $_SESSION['total']=$total['total']+1;
+  $total['total']=$total['total']+1;
+  save("total",$total);
+}
 
-//   //取出目前資料表中最新的進站人數資料
-//   $total=find("total",1);
 
-//   //設定使用者看到的進站人數為資料表中的人數加1
-//   $_SESSION['total']=$total['total']+1;
-
-//   //設定資料表陣列中的total欄位加1
-//   $total['total']=$total['total']+1;
-
-//   //利用save()函式將更新後的進站人數寫回資料表
-//   save("total",$total);
-// }
 function br(){
   echo "<br>";
 }
@@ -37,7 +28,27 @@ function echop(...$arg){
     br();
   }
 }
-
+function chkG($a){
+  if(!empty($_GET[$a])){
+    return $_GET[$a];
+  }else{
+    return "";
+  }
+}
+function chkP($a){
+  if(!empty($_POST[$a])){
+    return $_POST[$a];
+  }else{
+    return "";
+  }
+}
+function chkSS($a){
+  if(!empty($_SESSION[$a])){
+    return $_SESSION[$a];
+  }else{
+    return "";
+  }
+}
 //取得單筆資料
 function find($table,...$arg){
   global $pdo;
@@ -71,7 +82,7 @@ function find($table,...$arg){
 //取得全部資料
 function all($table,...$arg){
   global $pdo;
-
+  // echop($arg);
   $sql="select * from $table";
 
     if(!empty($arg[0])){
@@ -91,7 +102,7 @@ function all($table,...$arg){
 
     }
 
-  // return $sql;
+  // echo $sql;
 
   return $pdo->query($sql)->fetchAll();
 }
@@ -120,7 +131,7 @@ function nums($table,...$arg){
 
     }
 
-  //echo $sql;
+  echo $sql;
 
   return $pdo->query($sql)->fetchColumn();  
 

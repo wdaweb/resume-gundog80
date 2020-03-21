@@ -1,7 +1,7 @@
 <?php
 			include_once "./base.php";
 			
-			$table=$_GET['table'];
+			$table=$_GET['do'];
 			$userID=1;
 			if(isset($_GET['resumeID'])){
 				$resumeID=$_GET['resumeID'];

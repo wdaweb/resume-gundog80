@@ -1,6 +1,6 @@
 <?php
 	include_once "./base.php";
-	$table=$_GET['table'];
+	$table=$_GET['do'];
 	$userID=1;
 	if(isset($_GET['resumeID'])){
 		$resumeID=$_GET['resumeID'];
@@ -9,50 +9,32 @@
 		$_GET['resumeID']=$resumeID=$temp;
 	}
 	$photoPath=find('userBasicData',$userID)['photoPath'];
-	$show=find('resume',$resumeID)[$table];
-	// echo($show);
-	// echop($show);
-	// $table=$_GET['table'];
-	// print_r($rows);
-	?>
+	$show=find('resume',$userID)[$do];
+?>
 
-<div class=middleStyle>
-	<div>
-		<img class=photo style="height: 10vw;" src=<?php echo $photoPath; ?> alt="" >
-		<br>
-		<div name='deleteBtn' class=button
+<div class="row text-center">
+	<div class=col-4></div>
+	<div class="col-4 d-flex" style="align-items:center;">
+	<!-- //相片編輯區 -->
+		<img style="min-height: 30px;height:8em" src=<?php echo $photoPath; ?> alt="" >
+		<div class=col-1></div>
+		<div name='changePic' class=button
 		onclick="op('#cover','#cvr','./modal/changePhoto.php?table=<?php echo $table; ?>&userID=<?php echo $userID; ?>')">
 		更換相片
 		</div>
 	</div>
-	<div id="choseResume">
-		<div>
-			履歷表：
-			<?php
-			$temp=find('resume',$resumeID)['resumeName'];
-			
-			echop($temp);
-			?>
-		</div>	
-			
-		<datalist id=resumeList>
-		<?php
-			$rows=all('resume',['userID'=>$userID]);
-			foreach($rows as $k => $v){
-				echo "<option value=" . $v['id'] . " label=" . $v['resumeName'] . "></option>";
-			}
-			?>
-		</datalist>
-		<div>
-			<input type="url" list=resumeList name="resume" id=resumeInput class=minInput 
-			onchange="resumeChange()">
-		</div>
-	</div>
-	<form action="./api/saveResume.php" method="post">
+</div>
+<br>
+<div class=row> 
+	<!-- //資料編輯區 -->
+	<form class="col-12" action="./api/saveResume.php" method="post">
 	
-		<table class=optionTable>
+		<!-- <table class=optionTable> -->
+		<table class="table table-striped table-sm">
 		<?php
 		$data=['userID'=>$userID];
+		// echop($table);
+		// echop($data);
 		$rows=all($table,$data);
 		?>
 			<tr>
@@ -65,7 +47,7 @@
 			<tr>
 				<td>
 					<?php
-					$temp=$n[$table];
+					$temp=$n['text'];
 					echo $temp;
 					?>
 				</td>
@@ -74,19 +56,19 @@
 				<?php
 				echo $n['id'];
 				if ($show==$n['id']){
-					echo " checked=true";
+					echo "checked=true";
 				}
 					?>>
 					
 				</td>
 				<td> 
-					<div name='editBtn' class=button 
+					<div name='editBtn' class="button text-center" 
 					 onclick="op('#cover','#cvr','./modal/addShortSelfInterduction.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
 					編輯
 					</div>
 				</td>
 				<td>
-					<div name='deleteBtn' class=button 
+					<div name='deleteBtn' class="button text-center" 
 					 onclick="op('#cover','#cvr','./modal/deleteShortSelfInterduction.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
 					刪除
 					</div>
