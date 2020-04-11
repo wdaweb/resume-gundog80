@@ -1,22 +1,25 @@
 <?php
 	include_once "./base.php";
-	$table=$_GET['do'];
-	$userID=1;
+	$table=chkG('do');
+	$lab="招呼語";
+	$userID=chkSS('login');
 	if(isset($_GET['resumeID'])){
 		$resumeID=$_GET['resumeID'];
 	}else{
 		$temp=find('resume',['userID'=>$userID])['id'];
 		$_GET['resumeID']=$resumeID=$temp;
 	}
-	$photoPath=find('userBasicData',$userID)['photoPath'];
-	$show=find('resume',$userID)[$do];
+	$path=find('userBasicData',$userID)['path'];
+	$show=unserialize(find('resume',$userID)[$do]);
+	// echop($show);
+	
 ?>
 
 <div class="row text-center">
-	<div class=col-4></div>
-	<div class="col-4 d-flex" style="align-items:center;">
+	<div class=col-3></div>
+	<div class="col-6 d-flex" style="align-items:center;">
 	<!-- //相片編輯區 -->
-		<img style="min-height: 30px;height:8em" src=<?php echo $photoPath; ?> alt="" >
+		<img style="min-height: 30px;height:8em" src=<?php echo $path; ?> alt="" >
 		<div class=col-1></div>
 		<div name='changePic' class=button
 		onclick="op('#cover','#cvr','./modal/changePhoto.php?table=<?php echo $table; ?>&userID=<?php echo $userID; ?>')">
@@ -38,7 +41,7 @@
 		$rows=all($table,$data);
 		?>
 			<tr>
-				<td>已登錄短自介</td>
+				<td>已登錄招呼語</td>
 				<td class=std>選用</td>
 				<td>編輯</td>
 				<td>刪除</td>
@@ -52,24 +55,26 @@
 					?>
 				</td>
 				<td> 
-				<input type='radio' name='sh' value=
-				<?php
-				echo $n['id'];
-				if ($show==$n['id']){
-					echo "checked=true";
-				}
-					?>>
+				<input type='radio' name='sh[]' value=<?=$n['id'];?>
+					<?php
+					if(is_array($show)){
+						foreach ($show as $sh){
+							echo ($sh==$n['id'])?"checked":"";
+						}
+					}
+					?>
+				>
 					
 				</td>
 				<td> 
 					<div name='editBtn' class="button text-center" 
-					 onclick="op('#cover','#cvr','./modal/addShortSelfInterduction.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
+					 onclick="op('#cover','#cvr','./modal/editdata.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
 					編輯
 					</div>
 				</td>
 				<td>
 					<div name='deleteBtn' class="button text-center" 
-					 onclick="op('#cover','#cvr','./modal/deleteShortSelfInterduction.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
+					 onclick="op('#cover','#cvr','./modal/deleteData.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
 					刪除
 					</div>
 				</td>
@@ -77,8 +82,8 @@
             <?php } ?>
 			<tr>
 				<td colspan=4>
-					<input type="button" value="新增短自介" 
-					onclick="op('#cover','#cvr','./modal/addShortSelfInterduction.php?table=<?php echo $table; ?>&userID=<?php echo $userID; ?>')">
+					<input type="button" value="新增<?=$lab;?>" 
+					onclick="op('#cover','#cvr','./modal/editdata.php?table=<?php echo $table; ?>')">
 					<!-- &userID= -->
 					<?php
 					//  echo $userID; 

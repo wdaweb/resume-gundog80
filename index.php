@@ -1,6 +1,7 @@
 <?php
 include_once "./base.php";
 $user=chkSS("login");
+$nRes=chkG('nRes');
 // echo $user;
 ?>
 

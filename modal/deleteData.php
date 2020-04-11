@@ -1,30 +1,37 @@
 <?php
 include "../base.php";
-
 $table=$_GET['table'];
-$id=$_GET['id'];
-// print_r($_GET);
-
+$id=chkG("id");
+$userID=chkSS("login");
 
  ?>
 
 <div class=modal2 >
 	<br>
 	<h6>
-	刪除資料
+	刪除
+	<?php 
+	switch($table){
+		case "sayHellow" :
+			echo "招呼語";
+		case "image":
+			echo "圖片";
+		default:
+		break;
+	}
+	?>
 	</h6>
 	<hr>
 <br>
     確認刪除資料?
 	<div style="width:73%;">
 		<?php
-		$tmp=find($table,$id);
-		$tmp2=['id','userID','sh'];
-		foreach($tmp as $k =>$v){
-			if(!in_array($k,$tmp2)){
-				echo $k . "=" . $v;
-				br();
-			}
+		$data=find($table,$id);
+		if(!empty($data['path'])){
+			$tmp=$data['path'];
+			echo "<img src='$tmp' alt='' style='max-height:50vh;max-width:80%;'>";
+		}else{
+			echo $data['text'];
 		}
 
 		?>

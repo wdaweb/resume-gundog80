@@ -1,21 +1,18 @@
 <?php
-			include_once "./base.php";
-			
-			$table=$_GET['table'];
-			$userID=1;
-			if(isset($_GET['resumeID'])){
-				$resumeID=$_GET['resumeID'];
-			}else{
-				$temp=find('resume',['userID'=>$userID])['id'];
-				$_GET['resumeID']=$resumeID=$temp;
-			}
-			$show=explode(",",find('resume',$resumeID)[$table]);
-			
-			// echop($show);
-			// echop($show);
-			// $table=$_GET['table'];
-			// print_r($rows);
-			?>
+	include_once "./base.php";
+	
+	$table=$_GET['table'];
+	$userID=1;
+	if(isset($_GET['resumeID'])){
+		$resumeID=$_GET['resumeID'];
+	}else{
+		$temp=find('resume',['userID'=>$userID])['id'];
+		$_GET['resumeID']=$resumeID=$temp;
+	}
+	$show=explode(",",find('resume',$resumeID)[$table]);
+?>
+<br>
+
 <div id="choseResume">
 	<div>  <!-- 選擇履歷表 -->
 					履歷表：
@@ -49,10 +46,9 @@
 		$rows=all($table,$data);
 		?>
 			<tr>
-				<td>公司</td>
-				<td>職稱</td>
-				<td style="width:5em;">任職期間</td>
-				<td style="width:5em;">詳細說明</td>
+				<td style="width:30%;">展示圖片</td>
+				<td>作品名稱</td>
+				<td style="width:40%;">連結網址</td>
 				<td class=std>顯示</td>
 				<td>編輯</td>
 				<td>刪除</td>
@@ -64,51 +60,36 @@
 					<tr>
 					<td>
 						<?php
-                        $temp=$n['company'];
-                        if (strlen($temp)>20){
-                            $temp=substr($temp,0,20) . "...";
-                        }
-						echo $temp;
+						$temp=$n['imageID'];
+						$pic=find('image',$temp);
+						$src=$pic['src'];
+						$alt=$pic['fileName'];
+						echop("<img src=$src alt=$alt style='max-width:100%'; max-heigth:5em>");
 						?>
-					</td>
-					<td>
-						<?php
-                        $temp=$n['title'];
-                        if (strlen($temp)>20){
-                            $temp=substr($temp,0,20) . "...";
-                        }
-						echo $temp;
-						?>
-					</td>
-					<td>
-						<?php
-						$join=$n['join-time'];
-						$end=$n['end-time'];
-						$seniority=(strtotime($end)-strtotime($join))/(365*24*60*60);
-						// $temp=$n['seniority'];
-                        // if (strlen($temp)>10){
-                        //     $temp=substr($temp,0,9) . "...";
-                        // }
-						echo round($seniority);
-						?>
-					</td>
-					<td > 
-						<div onmouseover="showData(this)" onmouseout="hideData(this)"  >
-							more...
-							<div class=more>
-								任職期間
-								<br>
-								<?php
-								echo $n['join-time'] . "~" . $n['end-time'];
-								?>
-								職務說明
-								<br>
-								<?php
-								echo $n['description'];
-								?>
-							</div>
-
+						
+						<div name='editBtn' class=button 
+						 onclick="op('#cover','#cvr','./modal/changeImage.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>&userID=<?php echo $userID; ?>')">
+							更換圖片
 						</div>
+						
+					</td>
+					<td>
+						<?php
+                        $temp=$n['workName'];
+                        if (strlen($temp)>20){
+                            $temp=substr($temp,0,20) . "...";
+                        }
+						echo $temp;
+						?>
+					</td>
+					<td>
+						<?php
+                        $temp=$n['href'];
+                        if (strlen($temp)>30){
+                            $temp=substr($temp,0,30) . "...";
+                        }
+						echo $temp;
+						?>
 					</td>
 					<td> 
 					<input type='checkbox' name='sh[]' id=<?php echo "sh" . $n['id'] ; ?> value=
@@ -123,7 +104,7 @@
 					</td>
 					<td> 
 						<div name='editBtn' class=button 
-						 onclick="op('#cover','#cvr','./modal/saveWorkExperience.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
+						 onclick="op('#cover','#cvr','./modal/savePortfolio.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
 						編輯
 						</div>
 					</td>
@@ -141,8 +122,8 @@
 			<tr>
 				<td colspan=1></td>
 				<td colspan=6>
-					<input type="button" value="新增工作經歷" 
-					onclick="op('#cover','#cvr','./modal/saveWorkExperience.php?table=<?php echo $table; ?>&userID=<?php echo $userID; ?>')">
+					<input type="button" value="新增作品" 
+					onclick="op('#cover','#cvr','./modal/savePortfolio.php?table=<?php echo $table; ?>&userID=<?php echo $userID; ?>')">
 					<!-- &userID= -->
 					<?php
 					//  echo $userID; 

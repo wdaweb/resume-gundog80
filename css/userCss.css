@@ -97,7 +97,7 @@
 		width:10%;
 	}
 
-#cover
+#cover,#cover2
 {
 	width:100%;
 	height:100%;
@@ -108,7 +108,7 @@
 	left:0px;
 	overflow:auto;
 }
-#coverr
+#coverr,#coverr2
 {
 	width:70%;
 	min-width:300px;
@@ -129,19 +129,29 @@
 	width:80%;
 	font-size: 1em;
 }
-.modal2 *{
+/* .modal2 *{
 	margin:auto;
-}
-.modal2 textarea{
+} */
+/* .modal2 textarea{
 	width:100%;
-}
+} */
 .button{
 	width:80%;
 	max-width:5em;
-	background: rgba(150, 150, 0, 0.5);
-	height:1.8em;
-	box-shadow: 2px 2px 3px rgba(50,50,50.5);
+	background: rgba(194, 219, 84, 0.7);
+	/* height:1.8em; */
+	box-shadow: 2px 2px 3px rgba(50,50,50,0.5);
 	font-size: .8em;
+	padding:1.5px;
+}
+.lButton{
+	width:100%;
+	max-width:5em;
+	background: rgba(194, 219, 84, 0.7);
+	/* height:1.8em; */
+	box-shadow: 2px 2px 3px rgba(50,50,50,0.5);
+	font-size: .8em;
+	padding:1.5px;
 }
 #choseResume{
 	position: absolute;
@@ -159,12 +169,12 @@
 	width:12em;
 	/* height:8em; */
 	position:absolute;
-	left:2em;
-	top:.9em;
-	background:rgb(222,222,222);
+	left:3em;
+	top:1.1em;
+	background:rgb(172, 234, 236);
 	z-index:10;
 	display: none;
-	font-size: .7em;
+	font-size: .9em;
 }
 .showArea{
 	width:95%;

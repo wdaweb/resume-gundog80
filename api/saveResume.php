@@ -3,29 +3,16 @@ include_once "../base.php";
 echop($_POST);
 br();
 $table=$_POST['table'];
+$source=chkP('source',$table);
+$resume['id']=$_POST['resumeID'];
+unset($_POST['table']);
+unset($_POST['source']);
+
 // echop($)
 // if($table=="shortSelfInterduction" || $table=="selfInterduction"){
-if(in_array($table,["shortSelfInterduction","selfInterduction"])){
-	$data[$table]=$_POST['sh'];
-	$data['id']=$_POST['resumeID'];
+	// echop($_POST['sh']);
+	$resume[$table]=serialize($_POST['sh']);
 
-	echo "hio";
-		// echo "hi";
-		// echo $_POST['id'];
-	// }elseif($table=="workExperience"){
-	}elseif(in_array($table,["workExperience",'portfolio'])){
-		echo "hi";
-		$data[$table]=implode(",",$_POST['sh']);
-		$data['id']=$_POST['resumeID'];
-	}
-	// echop($data);
-	echop($table);
-	print_r($data);
-
-	save('resume',$data);
-	header("location:../admin.php?table=$table");
-
-// echo $_POST['shortSelfInterduction'];
-// br();
-// echo $table;
+	save('resume',$resume);
+	// to("../admin.php?do=$source");
 ?>

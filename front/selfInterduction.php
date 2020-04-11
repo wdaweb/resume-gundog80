@@ -1,12 +1,7 @@
 <?php
-			include_once "./base.php";
-			$table=$table;
-			$userID=1;
-			if(isset($_GET['resumeID'])){
-				$resumeID=$_GET['resumeID'];
-			}else{
-				$temp=find('resume',['userID'=>$userID])['id'];
-				$_GET['resumeID']=$resumeID=$temp;
+
+			if($nRes==""){
+				$nRes=chkSS('login');
 			}
 
 			?>
@@ -14,13 +9,17 @@
 <div id=font-simpleIntroduction class=normalArea >
 	<?php
 	$show=find('resume',$resumeID)[$table];
-	$introduction=find($table,$show);
-	?>
-	<div class="row ">
-		<div class=col-11>
-			<?php
-			echop($introduction[$table]);
-			?>
+	$dataID=unserialize(find('resume',$nRes)[$do]);
+	foreach ($dataID as $dID){
+		$data=find($do,$dID)
+		?>
+		<div class="row ">
+			<div class=col-1></div>
+			<pre class="col-12 col-md-10"><?php
+				echop($data['text']);
+			?></pre>
 		</div>
-	</div>
+		<?php
+	}
+	?>
 </div>

@@ -1,50 +1,31 @@
 <?php
-			include_once "./base.php";
-			
-			$table=$_GET['do'];
-			$userID=1;
-			if(isset($_GET['resumeID'])){
-				$resumeID=$_GET['resumeID'];
-			}else{
-				$temp=find('resume',['userID'=>$userID])['id'];
-				$_GET['resumeID']=$resumeID=$temp;
-			}
-			$show=find('resume',$resumeID)[$table];
-			echop($show);
-			// echop($show);
-			// $table=$_GET['table'];
-			// print_r($rows);
-			?>
-<div id="choseResume">
-	<div>  <!-- 選擇履歷表 -->
-					履歷表：
-					<?php
-					$temp=find('resume',$resumeID)['resumeName'];
-
-					echop($temp);
-					?>
-	</div>	
-	<datalist id=resumeList>
-	<?php
-		$rows=all('resume',['userID'=>$userID]);
-		foreach($rows as $k => $v){
-			echo "<option value=" . $v['id'] . " label=" . $v['resumeName'] . "></option>";
-		}
-		?>
-	</datalist>
-	<div>
-		<input type="url" list=resumeList name="resume" id=resumeInput class=minInput 
-		onchange="resumeChange()">
-	</div>
-</div>
-<br>
-<br>
-<div class=middleStyle>
-
-	<form action="./api/saveResume.php" method="post">
-		<table class=optionTable>
+	include_once "./base.php";
+	$table=$_GET['do'];
+	$lab="自我介紹";
+	$userID=chkSS('login');
+	if(isset($_GET['resumeID'])){
+		$resumeID=$_GET['resumeID'];
+	}else{
+		$temp=find('resume',['userID'=>$userID])['id'];
+		$_GET['resumeID']=$resumeID=$temp;
+	}
+	// $path=find('userBasicData',$userID)['path'];
+	$show=unserialize(find('resume',$userID)[$do]);
+	// echop($show);
+?>
+<div class=row> 
+	<h3><?=$lab;?>管理</h3>
+	<br>
+	<hr>
+	<!-- //資料編輯區 -->
+	<form class="col-12" action="./api/saveResume.php" method="post">
+	
+		<!-- <table class=optionTable> -->
+		<table class="table table-striped table-sm">
 		<?php
 		$data=['userID'=>$userID];
+		// echop($table);
+		// echop($data);
 		$rows=all($table,$data);
 		?>
 			<tr>
@@ -53,50 +34,44 @@
 				<td>編輯</td>
 				<td>刪除</td>
 			</tr>
-<?php
-			foreach($rows as $n){
-?>
-					<tr>
-					<td>
-						<?php
-                        $temp=$n['selfInterduction'];
-                        if (strlen($temp)>17){
-                            $temp=substr($temp,0,15) . "...";
-                        }
-						echo $temp;
-						?>
-					</td>
-					<td> 
-					<input type='radio' name='sh' value=
+			<?php foreach($rows as $n){ ?>
+			<tr>
+				<td>
+					<pre><?php
+					$temp=$n['text'];
+					echo $temp;
+					?></pre>
+				</td>
+				<td> 
+				<input type='radio' name='sh[]' value=<?=$n['id'];?>
 					<?php
-					echo $n['id'];
-					if ($show==$n['id']){
-						echo " checked=true";
+					if(is_array($show)){
+						foreach ($show as $sh){
+							echo ($sh==$n['id'])?"checked":"";
+						}
 					}
-						?>>
-						
-					</td>
-					<td> 
-						<div name='editBtn' class=button 
-						 onclick="op('#cover','#cvr','./modal/saveSelfInterduction.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
-						編輯
-						</div>
-					</td>
-					<td>
-						<div name='deleteBtn' class=button 
-						 onclick="op('#cover','#cvr','./modal/deleteData.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
-						刪除
-						</div>
-					</td>
-
-					</tr>
-<?php
-			}
-			?>
+					?>
+				>
+					
+				</td>
+				<td> 
+					<div name='editBtn' class="button text-center" 
+					 onclick="op('#cover','#cvr','./modal/editdata.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
+					編輯
+					</div>
+				</td>
+				<td>
+					<div name='deleteBtn' class="button text-center" 
+					 onclick="op('#cover','#cvr','./modal/deleteData.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
+					刪除
+					</div>
+				</td>
+			</tr>
+            <?php } ?>
 			<tr>
 				<td colspan=4>
-					<input type="button" value="新增自介" 
-					onclick="op('#cover','#cvr','./modal/saveSelfInterduction.php?table=<?php echo $table; ?>&userID=<?php echo $userID; ?>')">
+					<input type="button" value="新增<?=$lab;?>" 
+					onclick="op('#cover','#cvr','./modal/editdata.php?table=<?php echo $table; ?>')">
 					<!-- &userID= -->
 					<?php
 					//  echo $userID; 
@@ -112,3 +87,7 @@
 
 
 </div>
+<script>
+
+
+</script>

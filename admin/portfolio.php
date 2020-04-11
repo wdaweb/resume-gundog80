@@ -1,141 +1,123 @@
 <?php
 	include_once "./base.php";
-	
-	$table=$_GET['table'];
-	$userID=1;
+	$table=$_GET['do'];
+	$lab="作品集";
+	$userID=chkSS('login');
 	if(isset($_GET['resumeID'])){
 		$resumeID=$_GET['resumeID'];
 	}else{
 		$temp=find('resume',['userID'=>$userID])['id'];
 		$_GET['resumeID']=$resumeID=$temp;
 	}
-	$show=explode(",",find('resume',$resumeID)[$table]);
+	$show=unserialize(find('resume',$userID)[$do]);
 ?>
-<br>
 
-<div id="choseResume">
-	<div>  <!-- 選擇履歷表 -->
-					履歷表：
-					<?php
-					$temp=find('resume',$resumeID)['resumeName'];
-
-					echop($temp);
-					?>
-	</div>	
-	<datalist id=resumeList>
-	<?php
-		$rows=all('resume',['userID'=>$userID]);
-		foreach($rows as $k => $v){
-			echo "<option value=" . $v['id'] . " label=" . $v['resumeName'] . "></option>";
-		}
-		?>
-	</datalist>
-	<div>
-		<input type="url" list=resumeList name="resume" id=resumeInput class=minInput 
-		onchange="resumeChange()">
-	</div>
-</div>
-<br>
-<br>
-<div class=middleStyle>
-
-	<form action="./api/saveResume.php" method="post">
-		<table class=optionTable>
-		<?php
-		$data=['userID'=>$userID];
-		$rows=all($table,$data);
-		?>
-			<tr>
-				<td style="width:30%;">展示圖片</td>
-				<td>作品名稱</td>
-				<td style="width:40%;">連結網址</td>
-				<td class=std>顯示</td>
-				<td>編輯</td>
-				<td>刪除</td>
-				<!-- <div >測試</div> -->
-			</tr>
-<?php
-			foreach($rows as $n){
-?>
-					<tr>
-					<td>
-						<?php
-						$temp=$n['imageID'];
-						$pic=find('image',$temp);
-						$src=$pic['src'];
-						$alt=$pic['fileName'];
-						echop("<img src=$src alt=$alt style='max-width:100%'; max-heigth:5em>");
-						?>
-						
-						<div name='editBtn' class=button 
-						 onclick="op('#cover','#cvr','./modal/changeImage.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>&userID=<?php echo $userID; ?>')">
-							更換圖片
-						</div>
-						
-					</td>
-					<td>
-						<?php
-                        $temp=$n['workName'];
-                        if (strlen($temp)>20){
-                            $temp=substr($temp,0,20) . "...";
-                        }
-						echo $temp;
-						?>
-					</td>
-					<td>
-						<?php
-                        $temp=$n['href'];
-                        if (strlen($temp)>30){
-                            $temp=substr($temp,0,30) . "...";
-                        }
-						echo $temp;
-						?>
-					</td>
-					<td> 
-					<input type='checkbox' name='sh[]' id=<?php echo "sh" . $n['id'] ; ?> value=
-					<?php
-					echo $n['id'];
-					// if ($show==$n['id']){
-					if(in_array($n['id'],$show)){
-						echo " checked=true";
-					}
-						?>>
-						
-					</td>
-					<td> 
-						<div name='editBtn' class=button 
-						 onclick="op('#cover','#cvr','./modal/savePortfolio.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
-						編輯
-						</div>
-					</td>
-					<td>
-						<div name='deleteBtn' class=button 
-						 onclick="op('#cover','#cvr','./modal/deleteData.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
-						刪除
-						</div>
-					</td>
-
-					</tr>
-<?php
-			}
+<!-- <div class=middleStyle> -->
+	<h4 style="text-align:left"><?=$lab;?>管理</h4><br>
+		<form class="col-12" action="./api/saveTable.php" method="post">
+			<?php
+			$data=['userID'=>$userID];
+			$rows=all($table,$data);
 			?>
-			<tr>
-				<td colspan=1></td>
-				<td colspan=6>
-					<input type="button" value="新增作品" 
-					onclick="op('#cover','#cvr','./modal/savePortfolio.php?table=<?php echo $table; ?>&userID=<?php echo $userID; ?>')">
-					<!-- &userID= -->
-					<?php
-					//  echo $userID; 
-					 ?>
-			        
-					<input type="hidden" name="table" value=<?php echo $table ?>>
-					<input type="hidden" name="resumeID" value=<?php echo $resumeID ?>>
-					<input type="submit" value="儲存狀態">
-				</td>
-			</tr>
-		</table>
-	</form>
+			<div class=container>
+				<div class="card-columns">
+					<!-- <div class=card-columns> -->
+				<?php
+				foreach($rows as $k => $n){
+					$image=unserialize($n['image']);
+				?>
+					<!-- <div class="col-6 col-sm-4 col-md-3" style="padding:10px;"> -->
+						<div class="card bg-success text-center" style="padding:5px;">
+							<input type="hidden" name="id[]" value=<?=$n['id'];?>>
+
+							<div id="carouselBanner<?=$n['id'];?>" class="carousel slide" data-ride="carousel">
+  								<div class="carousel-inner">
+									<?php
+									foreach($image as $img){
+
+										?>
+										<div class="carousel-item">
+										  <img class="d-block w-100" style="height:10rem;"
+										  src="<?=find('image',$img)['path'];?>" alt="First slide">
+										</div>
+								  		<?php
+									}
+								  	?>
+  								</div>
+  								<a class="carousel-control-prev" href="#carouselBanner<?=$n['id'];?>" role="button" data-slide="prev">
+  								  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  								  <span class="sr-only">Previous</span>
+  								</a>
+  								<a class="carousel-control-next" href="#carouselBanner<?=$n['id'];?>" role="button" data-slide="next">
+  								  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  								  <span class="sr-only">Next</span>
+  								</a>
+							</div>
 
 
-</div>
+							<br>
+							<p class=card-title>
+								<h6>
+									<?=$n['workName'];?>
+								</h6>
+								<label>
+									連結網址
+									<br>
+									<a href="<?=$n['href'];?>" class="text-dark"><?=$n['href'];?></a>
+								</label>
+							</p>
+							<p class=card-text>
+								<textarea name="text[]" id="" rows="3" 
+								 style="background:#ccffcc;;width:80%;font-size:0.7rem"
+								 ><?=$n['text'];?></textarea>
+							</p>
+							<ul class="row list-inline justify-content-center">
+								<li class="col-12 col-md-4">
+									<div class="label small">顯示</div>
+									<input type='checkbox' name='sh[]' id=<?="sh" . $n['id'];?> 
+									value=<?=$n['id'];?> <?=(in_array($n['id'],$show))?"checked":"";?>>
+								</li>
+								<div class="col-6 justify-content-between align-items-center">
+									<li class="col">
+										<div name='editBtn' class="lButton text-center"
+										 onclick="op('#cover','#cvr','./modal/editData.php?table=<?=$table;?>&id=<?=$n['id'];?>')">
+										 編 輯
+										</div>
+									</li>
+									<li class="col">
+										<div name='deleteBtn' class="lButton text-center"
+										 onclick="op('#cover','#cvr','./modal/deleteData.php?table=<?=$table;?>&id=<?=$n['id'];?>')">
+										 刪 除
+										</div>
+									</li>
+								</div>
+							</ul>
+
+
+			
+						</div>
+						
+						<!-- </div> -->
+						<?php  
+				}
+				?>
+					</div>
+					<!-- </div> -->
+				</div>
+				<input type="hidden" name="table" value=<?php echo $table ?>>
+				<input type="hidden" name="resumeID" value=<?=$resumeID;?>>
+				<input type="button" value="新增作品" name='addPic'
+					onclick="op('#cover','#cvr','./modal/editdata.php?table=<?=$table; ?>')" >
+				<input type="submit" value="儲存狀態">
+			</form>
+	<!-- <div name='upFile' class=button
+	onclick="op('#cover','#cvr','./modal/saveImage.php?table=<?=$table; ?>&userID=<?=$userID; ?>')">
+		新增圖片
+	</div> -->
+
+
+<!-- </div> -->
+<script src="../js/jquery-1.9.1.min.js"></script>
+<script>
+$(".carousel-inner").find(":first").addClass('active');
+</script>

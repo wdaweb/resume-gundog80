@@ -28,25 +28,37 @@ function echop(...$arg){
     br();
   }
 }
-function chkG($a){
+function chkG($a,...$b){
   if(!empty($_GET[$a])){
     return $_GET[$a];
   }else{
-    return "";
+    if(!empty($b)){
+      return $b[0];
+    }else{
+      return "";
+    }
   }
 }
-function chkP($a){
+function chkP($a,...$b){
   if(!empty($_POST[$a])){
     return $_POST[$a];
   }else{
-    return "";
+    if(!empty($b)){
+      return $b[0];
+    }else{
+      return "";
+    }
   }
 }
-function chkSS($a){
+function chkSS($a,...$b){
   if(!empty($_SESSION[$a])){
     return $_SESSION[$a];
   }else{
-    return "";
+    if(!empty($b)){
+      return $b[0];
+    }else{
+      return "";
+    }
   }
 }
 //取得單筆資料
@@ -162,7 +174,7 @@ function save($table,$data){
 
   }
 
-  //echo $sql;
+  echo $sql;
   return $pdo->exec($sql);
 }
 

@@ -1,6 +1,3 @@
-<head>
-	<link rel="stylesheet" href="../css/userCss.css">
-</head>
 <body>
 	<?php
 	include_once "../base.php";
@@ -10,30 +7,38 @@
 	$userID=$_GET['userID'];
 	$title="更新相片";
 	switch($source){
-		case "shortSelfInterduction":
+		case "sayHellow":
 			$table="userBasicData";
 			break;
 		default:
 			break;
 	}
-	
-	$photoPath=find($table,$userID)['photoPath'];
-	echo $photoPath;
+	$photo=find($table,$userID);
+	$path=$photo['path'];
+	// echo $path;
 	?>
 	
-	<div class=modal2 >
-		<div class=middlestyle>
-			<div>
-				<img class=photo style="height: 10vw;" src=<?php echo $photoPath; ?> alt="" >
+	<!-- <div class=modal2 > -->
+	<div class=container >
+		<!-- <div class="row d-flex" style="justify-content: space-evenly"> -->
+		<div class="row" >
+		<!-- <div class=middlestyle> -->
+			<div class="col-12 text-center">
+				<img  style="min-height:30px;height:8em;" src=<?php echo $path; ?> alt="" >
 			</div>
 			<br>
-			<form action="./api/spSave.php"  enctype="multipart/form-data" method="post">
-				<input type="hidden" name="source" value=<?php echo $source;?>>
-				<input type="hidden" name="userID" value=<?php echo $userID;?>>
-				<!-- <input type="hidden" name="table" value=userBasic;?>> -->
-				<!-- <br> -->
-				<input type="file" name="updatePhoto" id="updatePhoto" value="上傳檔案">
-				<input type="submit" value="更換相片" >
+			<form class=col-12 action="./api/save.php"  enctype="multipart/form-data" method="post">
+				<div class="form-group col-12">
+					<input type="hidden" name="id" value=<?php echo $photo['id'];?>>
+					<input type="hidden" name="source" value=<?php echo $source;?>>
+					<input type="hidden" name="table" value="userbasicdata">
+				</div>
+				<div class="form-group col-12">
+					<input type="file" name="file" id="file" value="上傳檔案">
+				</div>
+				<div class="form-group col-12">
+					<input type="submit" value="確認變更" >
+				</div>
 			</form>
 		</div>
 		

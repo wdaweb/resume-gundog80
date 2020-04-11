@@ -51,7 +51,7 @@ if($nRes==""){
             <a class="nav-link" href="?do=sayHellow&resume=<?=$nRes;?>">編輯招呼語</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="?do=Experience&resume=<?=$nRes;?>">編輯學經歷</a>
+            <a class="nav-link" href="?do=workExp&resume=<?=$nRes;?>">編輯學經歷</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="?do=selfInterduction&resume=<?=$nRes;?>">編輯自介</a>
@@ -60,7 +60,7 @@ if($nRes==""){
             <a class="nav-link" href="?do=image&resume=<?=$nRes;?>">圖片管理</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="?do=作品集管理&resume=<?=$nRes;?>">作品集管理</a>
+            <a class="nav-link" href="?do=portfolio&resume=<?=$nRes;?>">作品集管理</a>
           </li>
         </ul>
 
