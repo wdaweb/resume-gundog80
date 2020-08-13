@@ -1,15 +1,16 @@
 <?php 
 $dsn="mysql:host=localhost;charset=utf8;dbname=resume";
-// $pdo=new PDO($dsn,"root","1234");
 $pdo=new PDO($dsn,"root","");
+// $dsn="mysql:host=localhost;charset=utf8;dbname=s1080317";
+// $pdo=new PDO($dsn,"s1080317","s1080317");
 
 session_start();
 
 if(empty($_SESSION['total'])){
-  $total=find("total",1);
+  $total=find("resume_total",1);
   $_SESSION['total']=$total['total']+1;
   $total['total']=$total['total']+1;
-  save("total",$total);
+  save("resume_total",$total);
 }
 
 
@@ -83,7 +84,7 @@ function find($table,...$arg){
 
   }
 
-  //echo $sql;
+  // echo $sql;
 
   return $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
   // return $pdo->query($sql);
@@ -143,7 +144,7 @@ function nums($table,...$arg){
 
     }
 
-  echo $sql;
+  // echo $sql;
 
   return $pdo->query($sql)->fetchColumn();  
 
@@ -174,7 +175,7 @@ function save($table,$data){
 
   }
 
-  echo $sql;
+  // echo $sql;
   return $pdo->exec($sql);
 }
 
@@ -210,7 +211,7 @@ function del($table,...$arg){
 //查詢資料
 function q($sql){
   global $pdo;
-
+  // echop($sql);
   return $pdo->query($sql)->fetchAll();
 
 }

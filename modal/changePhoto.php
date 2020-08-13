@@ -1,8 +1,6 @@
 <body>
 	<?php
 	include_once "../base.php";
-	
-	
 	$source=$_GET['table'];
 	$userID=$_GET['userID'];
 	$title="更新相片";
@@ -13,9 +11,8 @@
 		default:
 			break;
 	}
-	$photo=find($table,$userID);
+	$photo=find("resume_$table",$userID);
 	$path=$photo['path'];
-	// echo $path;
 	?>
 	
 	<!-- <div class=modal2 > -->
@@ -31,7 +28,7 @@
 				<div class="form-group col-12">
 					<input type="hidden" name="id" value=<?php echo $photo['id'];?>>
 					<input type="hidden" name="source" value=<?php echo $source;?>>
-					<input type="hidden" name="table" value="userbasicdata">
+					<input type="hidden" name="table" value="userBasicData">
 				</div>
 				<div class="form-group col-12">
 					<input type="file" name="file" id="file" value="上傳檔案">

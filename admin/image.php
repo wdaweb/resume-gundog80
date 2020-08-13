@@ -6,7 +6,7 @@
 	if(isset($_GET['resumeID'])){
 		$resumeID=$_GET['resumeID'];
 	}else{
-		$temp=find('resume',['userID'=>$userID])['id'];
+		$temp=find('resume_resume',['userID'=>$userID])['id'];
 		$_GET['resumeID']=$resumeID=$temp;
 	}
 ?>
@@ -16,7 +16,7 @@
 		<form class="col-12" action="./api/saveTable.php" method="post">
 			<?php
 			$data=['userID'=>$userID];
-			$rows=all($table,$data);
+			$rows=all("resume_$table",$data);
 			?>
 			<div class=container>
 				<div class="card-columns">
@@ -54,7 +54,7 @@
 				</div>
 				<input type="hidden" name="table" value=<?php echo $table ?>>
 				<input type="button" value="新增圖片" name='addPic'
-					onclick="op('#cover','#cvr','./modal/editdata.php?table=<?=$table; ?>')" >
+					onclick="op('#cover','#cvr','./modal/editData.php?table=<?=$table; ?>')" >
 				<input type="submit" value="儲存狀態">
 			</form>
 	<!-- <div name='upFile' class=button

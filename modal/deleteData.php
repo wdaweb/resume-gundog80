@@ -26,7 +26,7 @@ $userID=chkSS("login");
     確認刪除資料?
 	<div style="width:73%;">
 		<?php
-		$data=find($table,$id);
+		$data=find("resume_$table",$id);
 		if(!empty($data['path'])){
 			$tmp=$data['path'];
 			echo "<img src='$tmp' alt='' style='max-height:50vh;max-width:80%;'>";

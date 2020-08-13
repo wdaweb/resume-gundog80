@@ -6,11 +6,11 @@
 	if(isset($_GET['resumeID'])){
 		$resumeID=$_GET['resumeID'];
 	}else{
-		$temp=find('resume',['userID'=>$userID])['id'];
+		$temp=find('resume_resume',['userID'=>$userID])['id'];
 		$_GET['resumeID']=$resumeID=$temp;
 	}
-	$show=unserialize(find('resume',$userID)[$do]);
-	// echop($show);
+	$show=unserialize(find('resume_resume',$resumeID)[$do]);
+	// echop($show,'show');
 	
 ?>
 
@@ -25,9 +25,9 @@
 		$data=['userID'=>$userID];
 		// echop($table);
 		// echop($data);
-		$rows=all($table,$data);
+		$rows=all("resume_$table",$data);
 		?>
-			<tr><td>
+			<tr><td class="d-none d-md-block">
 				<ul class="row" style="list-style:none;">
 				<!-- <ul class="row pagination"> -->
 					<li class="col-12 col-md-3 border-2 border-primary">公司</li>
@@ -46,19 +46,19 @@
 				<ul class="row" style="list-style:none;">
 				<!-- <ul class="row pagination"> -->
 					<li class="col-12 col-md-3 border-2 border-primary">
-						<span>公司：</span>
+						<span class="d-md-none">公司/機構：</span>
 						<?=$n['company'];?>
 					</li>
 					<li class="col-12 col-md-3 border-2 border-primary">
-						<span>職稱：</span>
+						<span class="d-md-none">職稱：</span>
 						<?=$n['title'];?>
 					</li>
 					<li class="col-12 col-md-6">
-						<span>任職期間：</span>
+						<span class="d-md-none">任職期間：</span>
 						<?=substr($n['join-time'],0,7) . " 至 " . substr($n['end-time'],0,7);?>
 					</li>
 					<li class="col-12 col-md-7" onmouseover="showData(this)" onmouseout="hideData(this)">
-						<span>詳細說明：</span>
+						<span class="d-md-none">詳細說明：</span>
 						<?=mb_substr($n['description'],0,20) . "...";?>
 						<div class=more>
 							<?=$n['description'];?>

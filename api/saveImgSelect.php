@@ -15,7 +15,7 @@ if(!empty($_POST['image'])){
 		unset($data['id']);
 	}
 	// unset($_POST['image']);
-	save($table,$data);
+	save("resume_$table",$data);
 }
 // foreach ($_POST as $k => $v){
 // 	$tag[]=$k;
@@ -26,5 +26,5 @@ if(!empty($_POST['image'])){
 // 	}
 // 	save($table,$data);
 // }
-// to("$source");
+to("$source");
 ?>

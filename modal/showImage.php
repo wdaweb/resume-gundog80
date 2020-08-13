@@ -1,7 +1,7 @@
 <?php
 include_once "../base.php";
 $id=chkG('id');
-$data=find('image',$id);
+$data=find('resume_image',$id);
 ?>
 <div class=container>
 	<div class=row>

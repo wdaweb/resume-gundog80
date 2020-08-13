@@ -1,7 +1,7 @@
 <?php
 include_once "./base.php";
 $user=chkSS("login");
-$resumes=all('resume',['userID'=>$user]);
+$resumes=all('resume_resume',['userID'=>$user]);
 $do=chkG('do');
 ?>
 
@@ -15,31 +15,15 @@ $do=chkG('do');
 	<title>履歷系統-個人管理頁面</title>
 	<link rel="stylesheet" href="./css/userCss.css">
 	<link href="./css/bootstrap.min.css" rel="stylesheet">
-
+	<script src="./js/jquery-1.9.1.min.js"></script>
+	<script src="./js/js.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
 
 </head>
 <body>
-	<div id="cover" style="display:none; ">
-		<!-- //modal Area -->
-		<div id="coverr" style="border-radius:20px;">
-			<a style="position:absolute; font-size:1.5em;height:40px;width:40px; border:solid 2px; border-radius:20px;
-			right:15px; top:15px; text-align:center;cursor:pointer; z-index:9999;"
-			onclick="cl(&#39;#cover&#39;)">X</a>
-			<div id="cvr" style="position:absolute; width:100%; height:100%; margin:auto; z-index:9898;
-			 padding:20px 0px; background:#fffddd;"></div>
-		</div>
-	</div>
-	<div id="cover2" style="display:none; ">
-		<!-- //modal Area -->
-		<div id="coverr2" style="border-radius:20px;">
-			<a style="position:absolute; font-size:1.5em;height:40px;width:40px; border:solid 2px; border-radius:20px;
-			right:15px; top:15px; text-align:center;cursor:pointer; z-index:9999;"
-			onclick="cl(&#39;#cover2&#39;)">X</a>
-			<div id="cvr2" style="position:absolute; width:100%; height:100%; margin:auto; z-index:9898;
-			 padding:20px 0px; background:#fffddd;"></div>
-		</div>
-	</div>
-	
+	<?php
+	include_once "./modal/modalbasic.php";
+	?>
 	<?php include_once "./admin/adminTitle.php"; ?> 	
 	<!-- //導灠列 -->
 
@@ -53,20 +37,22 @@ $do=chkG('do');
 		</div>
 		<hr>
 		
+		<?php
+		if ($do!="" && $do!="image" && $do!="addRes" ){
+			?>
 		<h3> <?=($do!="image")?"樣式預覽":"";?></h3>
 		<br>
 		<div id=previewArea class="container">
 			<?php
-				if ($do!=""){
 					include("./front/$do.php");
-				}			?>	
-			
+			?>
 		</div>
+			<?php
+			} 			
+		?>	
 	</div>
 
-	<script src="./js/jquery-1.9.1.min.js"></script>
-	<script src="./js/js.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+
 	<script>
 		let resumeChange=function (){
 			let getUrlString = location.href;

@@ -19,11 +19,12 @@ if(!empty($_FILES['file']['tmp_name'])){
 	$type=$type[$tmp];
 	$tpName=$_FILES['file']['tmp_name'];
 	$path="./upFile/" . md5($_FILES['file']['name'] . date("His")) . "." . $type;
+	// $path="./upFile/" . $_FILES['file']['name'] . "." . $type;
 	rename($tpName,"." . $path);
 	$_POST['path']=$path;
 	$_POST['fName']=$fName;
 }
-save($table,$_POST);
+save("resume_$table",$_POST);
 
 
 // switch($source){

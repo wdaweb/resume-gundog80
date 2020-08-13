@@ -12,7 +12,7 @@ if($source==""){
 	$data['id']=$_POST['id'];
 
 
-	del($table,$data[id]);
+	del("resume_$table",$data[id]);
 	header("location:../admin.php?do=$table");
 // if($table=="shortSelfInterduction" || "selfInterduction" ){
 // 	$data[$table]=$_POST[$table];

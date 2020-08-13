@@ -1,5 +1,5 @@
 <?php
-$nRes=chkG('resume');
+$nRes=chkG('resumeID');
 if($nRes==""){
     $nRes=$resumes[0]['id'];
 }
@@ -11,7 +11,7 @@ if($nRes==""){
 		<div class="col-12 col-md-3">
             您好，
 			<?php
-            echo find("userbasicdata",$user)['name'];
+            echo find("resume_userBasicData",$user)['name'];
             ?>
         </div>
         <div class="col-7 col-md-5">
@@ -33,34 +33,34 @@ if($nRes==""){
             <a href="?do=addRes">
                 <button type="button" class="btn btn-sm btn-success" id=addRes>新增履歷表</button>
             </a>
-            <a href="./?resume=<?=$nRes;?>">
+            <a href="./?nRes=<?=$nRes;?>">
 		    	<button type="button" class="btn btn-sm btn-success" id=front >觀看前台</button>
             </a>
         </div>
 	</div>
     <div class="navbar navbar-expand-lg navbar-light bg-light">
         <!-- 導灠列 -->
-      <a class="navbar-brand" href="#">Mark</a>
+      <a class="navbar-brand" href="#"><img src="./icon/gundog02.ico" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon">123</span>
+        <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto" >
           <li class="nav-item active">
-            <a class="nav-link" href="?do=sayHellow&resume=<?=$nRes;?>">編輯招呼語</a>
+            <a class="nav-link" href="?do=sayHellow&resumeID=<?=$nRes;?>">編輯招呼語</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="?do=workExp&resume=<?=$nRes;?>">編輯學經歷</a>
+            <a class="nav-link" href="?do=workExp&resumeID=<?=$nRes;?>">編輯學經歷</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="?do=selfInterduction&resume=<?=$nRes;?>">編輯自介</a>
+            <a class="nav-link" href="?do=selfInterduction&resumeID=<?=$nRes;?>">編輯自介</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="?do=image&resume=<?=$nRes;?>">圖片管理</a>
+            <a class="nav-link" href="?do=image&resumeID=<?=$nRes;?>">圖片管理</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="?do=portfolio&resume=<?=$nRes;?>">作品集管理</a>
+            <a class="nav-link" href="?do=portfolio&resumeID=<?=$nRes;?>">作品集管理</a>
           </li>
         </ul>
 
@@ -71,6 +71,6 @@ if($nRes==""){
 <script>
 function reld(){
     nowresume=$("#nowRes").val()
-    location.replace(`?resume=${nowresume}`)
+    location.replace(`?resumeID=${nowresume}`)
 }
 </script>

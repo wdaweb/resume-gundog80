@@ -11,7 +11,7 @@ if($id==""){
 	//新增 
 	$title="新增";
 	$btn="新增";
-	$data=all($table)[0];
+	$data=all("resume_$table")[0];
 	foreach($data as $k=>$v){
 		$data[$k]="";
 	}
@@ -19,7 +19,7 @@ if($id==""){
 	//編輯
 	$title="編輯";
 	$btn="更新";
-	$data=find($table,$id);
+	$data=find("resume_$table",$id);
 }
  ?>
 
@@ -63,76 +63,13 @@ if($id==""){
 	<div class=container>
 <?php
 		if($table=="sayHellow" || $table=="selfInterduction"){
-			?>
-			<div class=row>
-				<textarea class="col-12 col-md-9" style="font-size:1.0em;margin:0 auto; " 
-				name="text" id="" cols="40" rows="6"><?php
-				// echop($data);
-				echo ($id=="")?"":$data['text'];
-				  ?></textarea>
-			</div>
-			<?php
+			include "./sayHellow.php";
 		}elseif($table=="image" || $table=="file"){
-			?>
-			<div class="row justify-content-start">
-				<div class=col-12>
-					<input type="file" name="file" id="">
-				</div>
-				<div class=col-3>
-					<label>檔案說明:</label>
-					<input class=col-12 type="text" name="fName" id="">
-				</div>
-				<div class=col-12>
-					<textarea class="col-12 col-md-10" name="text" id="" rows="3" ></textarea>
-				</div>
-			</div>
-			<?php
+			include "./image.php";
 		}elseif($table=="workExp"){
-			?>
-			<div class=row>
-				<div class="col-12 col-md-3">
-					<label for="">公司</label>
-					<input class="col-12" type="text"  name=company value="<?=$data['company'];?>">
-				</div>
-				<div class="col-12 col-md-3 offset-md-1">
-					<label for="">職稱</label>
-					<input class="col-12" type="text"  name=company value="<?=$data['title'];?>">
-				</div>
-				<div class="col-12 col-md-6">
-					<label for="">入職時間</label>
-					<?php
-						if($data['join-time']!=""){
-							$type="text";
-						}else{
-							$type="month";
-						}
-					?>
-					<input class="col-12" type=<?=$type;?>  name=company value="<?=$data['join-time'];?>">
-				</div>
-				<div class="col-12 col-md-6">
-					<label for="">離職時間</label>
-					<?php
-						if($data['end-time']!=""){
-							$type="text";
-						}else{
-							$type="month";
-						}
-						?>
-					<input class="col-12" type=<?=$type;?>  name=company value="<?=$data['end-time'];?>">
-				</div>
-				<div class="col-12">
-					<label for="">職務說明</label>
-					<br>
-					<textarea name=description id="" style="width:100%;" rows="3" 
-					 ><?=$data['description'];?></textarea>
-				</div>
-			</div>
-			<?php
+			include "./workExp.php";
 		}elseif($table=="portfolio"){
 			include "./portfolio.php";
-			?>
-			
-			<?php
 		}
 ?>
 		<br>

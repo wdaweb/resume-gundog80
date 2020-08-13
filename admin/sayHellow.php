@@ -6,12 +6,13 @@
 	if(isset($_GET['resumeID'])){
 		$resumeID=$_GET['resumeID'];
 	}else{
-		$temp=find('resume',['userID'=>$userID])['id'];
+		$temp=find('resume_resume',['userID'=>$userID])['id'];
 		$_GET['resumeID']=$resumeID=$temp;
 	}
-	$path=find('userBasicData',$userID)['path'];
-	$show=unserialize(find('resume',$userID)[$do]);
-	// echop($show);
+	// echop($resumeID,'resID');
+	$path=find('resume_userBasicData',$userID)['path'];
+	$show=unserialize(find('resume_resume',$resumeID)[$do]);
+
 	
 ?>
 
@@ -38,7 +39,7 @@
 		$data=['userID'=>$userID];
 		// echop($table);
 		// echop($data);
-		$rows=all($table,$data);
+		$rows=all("resume_$table",$data);
 		?>
 			<tr>
 				<td>已登錄招呼語</td>
@@ -68,7 +69,7 @@
 				</td>
 				<td> 
 					<div name='editBtn' class="button text-center" 
-					 onclick="op('#cover','#cvr','./modal/editdata.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
+					 onclick="op('#cover','#cvr','./modal/editData.php?table=<?php echo $table; ?>&id=<?php echo $n['id']; ?>')">
 					編輯
 					</div>
 				</td>
@@ -83,7 +84,7 @@
 			<tr>
 				<td colspan=4>
 					<input type="button" value="新增<?=$lab;?>" 
-					onclick="op('#cover','#cvr','./modal/editdata.php?table=<?php echo $table; ?>')">
+					onclick="op('#cover','#cvr','./modal/editData.php?table=<?php echo $table; ?>')">
 					<!-- &userID= -->
 					<?php
 					//  echo $userID; 

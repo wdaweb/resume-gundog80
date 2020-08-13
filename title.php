@@ -2,7 +2,7 @@
 include_once "./base.php";
 // if(isset($_GET['resumeID'])){
 ?>
-<div class="container-fluid">
+<div id=title class="container-fluid d-none">
 	<div class="row">
 		<div class="col-xs-12 col-md-4">
 			您好，
@@ -11,7 +11,7 @@ include_once "./base.php";
 				echo "guest <br> 
 				<span class=hidden-xs>可於右方註冊新帳號測試</span>";
 			}else{
-				echo find("userbasicdata",$user)['name'];
+				echo find("resume_userBasicData",$user)['name'];
 			}
 			?>
 		</div>
@@ -31,7 +31,7 @@ include_once "./base.php";
 				<div class="form-group">
 				<!-- <div class="form-group col-10 col-md-3"> -->
 					<button type="submit" class="btn btn-sm btn-success">登入</button>
-					<button type="button" class="btn btn-sm btn-success" id=recBtn >註冊</button>
+					<button type="button" class="btn btn-sm btn-success" id=regBtn >註冊</button>
 				</div>
 				<?php
 			}else{
@@ -52,9 +52,10 @@ include_once "./base.php";
 </div>
 <script src="./js/jquery-1.9.1.min.js"></script>
 <script>
-	$("#recBtn").on("click",function(){
+	$("#regBtn").on("click",function(){
 		// location.replace("./rec.php")
-		location.assign("./rec.php")
+		op('#cover','#cvr','./modal/reg.php')
+		// location.assign("./front/reg.php")
 	})
 	$("#toAdmin").on("click",function(){
 		// location.replace("./rec.php")

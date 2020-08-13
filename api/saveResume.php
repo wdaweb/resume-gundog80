@@ -13,6 +13,6 @@ unset($_POST['source']);
 	// echop($_POST['sh']);
 	$resume[$table]=serialize($_POST['sh']);
 
-	save('resume',$resume);
-	// to("../admin.php?do=$source");
+	save('resume_resume',$resume);
+	to("../admin.php?do=$source");
 ?>

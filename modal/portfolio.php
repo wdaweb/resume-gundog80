@@ -1,11 +1,11 @@
 <?php
-echop($_GET,'get');
-echop($_POST,'post');
+// echop($_GET,'get');
+// echop($_POST,'post');
 $table=chkg('table');
 $id=chkg('id');
-$data=find($table,$id);
+$data=find("resume_$table",$id);
 $image=unserialize($data['image']);
-echop($image);
+// echop($image);
 ?>
 <div class=form-group>
     <!-- <div class="card-columns col-12 col-md-6"> -->
@@ -14,12 +14,14 @@ echop($image);
             <div id="carouselBanner<?=$data['id'];?>" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <?php
-					foreach($image as $img){
-						?>
-						<div class="carousel-item">
-						  <img class="d-block w-100" src="<?=find('image',$img)['path'];?>" alt="First slide">
-						</div>
-				  		<?php
+					if(!empty($image)){
+						foreach($image as $img){
+							?>
+							<div class="carousel-item">
+							  <img class="d-block w-100" src="<?=find('resume_image',$img)['path'];?>" alt="First slide">
+							</div>
+							<?php
+						}
 					}
 				  	?>
   				</div>
@@ -32,14 +34,20 @@ echop($image);
   				  <span class="sr-only">Next</span>
   				</a>
 			</div>
-    		<!-- <img class=card-image-top style="max-width:90%; max-height:40vh;margin:5px;" src=<?=find('image',$image[0])['path'];?> alt="<?=$data['workName'];?>" -->
-    		 <!-- onclick="op('#cover','#cvr','./modal/showImage.php?id=<?=find('image',$data['imageID'])['id'];?>')"> -->
+    		<!-- <img class=card-image-top style="max-width:90%; max-height:40vh;margin:5px;" src=<?=find('resume_image',$image[0])['path'];?> alt="<?=$data['workName'];?>" -->
+    		 <!-- onclick="op('#cover','#cvr','./modal/showImage.php?id=<?=find('resume_image',$data['imageID'])['id'];?>')"> -->
     	</div>
     <!-- </div> -->
-    <!-- !!!!!!//不能用input 改button!!!!!!! -->
-    <input type="button" value="選取圖片" name='addPic'
-    					onclick="op('#cover2','#cvr2','./modal/choseImage.php?table=<?=$table;?>&userID=<?=$userID;?>&id=<?=$id;?>')" >
-    <!-- !!!!!!//不能用input 改button!!!!!!! -->
+	<?php
+	if($id!=""){
+		?>
+		<input type=button name='addPic' value=" 選取圖片"
+		  onclick="op('#cover2','#cvr2','./modal/choseImage.php?table=<?=$table;?>&userID=<?=$userID;?>&id=<?=$id;?>')">
+		  <!-- onclick="op('#cover2','#cvr2','./modal/choseImage.php?table=<?=$table;?>&userID=<?=$userID;?>&id=<?=$id;?>')"> -->
+		 
+		<?php
+	}
+	?>
 </div>
 <div class=form-grou>
     <label>作品名稱</label>
